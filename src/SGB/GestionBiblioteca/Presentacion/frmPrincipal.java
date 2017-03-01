@@ -33,6 +33,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         mnuRegistrar = new javax.swing.JMenu();
         mnuCategoria = new javax.swing.JMenuItem();
+        mnuCategoria1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
@@ -62,6 +63,15 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuRegistrar.add(mnuCategoria);
+
+        mnuCategoria1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mnuCategoria1.setText("Libro");
+        mnuCategoria1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCategoria1ActionPerformed(evt);
+            }
+        });
+        mnuRegistrar.add(mnuCategoria1);
 
         jMenuBar2.add(mnuRegistrar);
 
@@ -116,6 +126,11 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_pnlPrincipalMouseMoved
 
+    private void mnuCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCategoria1ActionPerformed
+        frmLibros ofrmLibro = new frmLibros();
+        ofrmLibro.setVisible(true);
+    }//GEN-LAST:event_mnuCategoria1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,6 +175,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem mnuCategoria;
+    private javax.swing.JMenuItem mnuCategoria1;
     private javax.swing.JMenu mnuRegistrar;
     private javax.swing.JDesktopPane pnlPrincipal;
     // End of variables declaration//GEN-END:variables

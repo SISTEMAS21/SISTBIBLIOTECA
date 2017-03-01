@@ -46,7 +46,7 @@ public class LibroAD extends EntidadAD{
     
     public String getCodigo() throws Exception{
         try {
-            String sql = "select lpad(cast(case when max(cast(codlibro as character)) is null then 1 else (max(cast(codlibro as character)) + 1) end as character),2,'0') as codlibro from libro";
+            String sql = "select lpad(cast(case when max(cast(codlibro as character)) is null then 1 else (max(cast(codlibro as character)) + 1) end as character),10,'0') as codlibro from libro";
             
             String codigo = "";
             

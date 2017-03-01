@@ -1,8 +1,8 @@
 package SGB.GestionBiblioteca.Presentacion;
 
 
-import SGB.GestionBiblioteca.Entidades.Categoria;
-import SGB.GestionBiblioteca.LogicaNegocio.CategoriaLN;
+import SGB.GestionBiblioteca.Entidades.Libro;
+import SGB.GestionBiblioteca.LogicaNegocio.LibroLN;
 import Util.Util;
 import Util.mdlGeneral;
 import java.awt.event.KeyEvent;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class frmLibros extends javax.swing.JDialog {
-    private String[] columnas = {"Id","N°","Código","Nombre"};
+    private String[] columnas = {"Id","N°","Código","Nombre","Categoria"};
     private Integer fila = 0;
 
     public frmLibros() {
@@ -28,33 +28,34 @@ public class frmLibros extends javax.swing.JDialog {
 
         Util.AplicarIcono(this);
 
-        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Categorias","Permite mantener un registro actualizado de las categorias");
+        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Libros","Permite mantener un registro actualizado de libros");
 
         Util.AplicarSubencabezado(this,lblSubencabezado,"Subencabezado","Mantenimiento");
 
-        tblCategorias.setModel(new mdlGeneral(columnas));
+        tblLibros.setModel(new mdlGeneral(columnas));
 
-        Integer[] anchos = {0,40,50,580};
-        Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.LEFT};
-        String[] formatos = {"Cadena","Cadena","Cadena","Cadena"};
-        String[] modos = {"Normal","Normal","Normal","Resaltado"};
+        Integer[] anchos = {0,40,50,520,60};
+        Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.LEFT,JLabel.LEFT};
+        String[] formatos = {"Cadena","Cadena","Cadena","Cadena","Cadena"};
+        String[] modos = {"Normal","Normal","Normal","Resaltado","Normal"};
 
-        Util.AplicarEstilos(tblCategorias,anchos,alineaciones,formatos,modos);
+        Util.AplicarEstilos(tblLibros,anchos,alineaciones,formatos,modos);
 
         Buscar();
     }
 
-    private List aVector(List<Categoria> lista) {
+    private List aVector(List<Libro> lista) {
         List datos = new ArrayList();
         Object[] newdata;
 
         for(int i = 0; i < lista.size(); i++) {
-            newdata = new Object[4];
+            newdata = new Object[5];
 
-            newdata[0] = lista.get(i).getIdcat();
+            newdata[0] = lista.get(i).getIdlibro();
             newdata[1] = (i + 1);
-            newdata[2] = lista.get(i).getCodcat();
-            newdata[3] = lista.get(i).getNomcat();
+            newdata[2] = lista.get(i).getCodlibro();
+            newdata[3] = lista.get(i).getNomlibro();
+            newdata[4] = lista.get(i).getOcategoria().getNomcat();
 
             datos.add(newdata);
         }
@@ -62,13 +63,13 @@ public class frmLibros extends javax.swing.JDialog {
         return datos;
     }
 
-    private void ListarCategorias() throws Exception {
+    private void ListarLibros() throws Exception {
         try {
-            CategoriaLN categoriaLN = new CategoriaLN();
-            ((mdlGeneral)(tblCategorias.getModel())).setData(aVector(categoriaLN.ConsultarCategorias(txtNombre.getText().trim().toUpperCase())));
+            LibroLN libroLN = new LibroLN();
+            ((mdlGeneral)(tblLibros.getModel())).setData(aVector(libroLN.ConsultarLibros(txtNombre.getText().trim().toUpperCase())));
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.changeSelection(fila,0,false,false);
+            if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                tblLibros.changeSelection(fila,0,false,false);
             }
             else {
                 txtNombre.requestFocus();
@@ -90,7 +91,7 @@ public class frmLibros extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         spTemas = new javax.swing.JScrollPane();
-        tblCategorias = new javax.swing.JTable();
+        tblLibros = new javax.swing.JTable();
         btnVer = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -140,7 +141,7 @@ public class frmLibros extends javax.swing.JDialog {
             }
         });
 
-        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        tblLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -148,20 +149,20 @@ public class frmLibros extends javax.swing.JDialog {
 
             }
         ));
-        tblCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblLibros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCategoriasMouseClicked(evt);
+                tblLibrosMouseClicked(evt);
             }
         });
-        tblCategorias.addKeyListener(new java.awt.event.KeyAdapter() {
+        tblLibros.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tblCategoriasKeyPressed(evt);
+                tblLibrosKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblCategoriasKeyReleased(evt);
+                tblLibrosKeyReleased(evt);
             }
         });
-        spTemas.setViewportView(tblCategorias);
+        spTemas.setViewportView(tblLibros);
 
         javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
@@ -190,7 +191,7 @@ public class frmLibros extends javax.swing.JDialog {
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spTemas, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addComponent(spTemas, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -310,36 +311,36 @@ public class frmLibros extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMouseClicked
+    private void tblLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLibrosMouseClicked
         try {
             if(evt.getClickCount() == 1) {
-                fila = tblCategorias.getSelectedRow();
+                fila = tblLibros.getSelectedRow();
             }
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null,e.getMessage(),"Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
-}//GEN-LAST:event_tblCategoriasMouseClicked
+}//GEN-LAST:event_tblLibrosMouseClicked
 
-    private void tblCategoriasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCategoriasKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_UP && tblCategorias.getSelectedRow() == 0) {
+    private void tblLibrosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblLibrosKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_UP && tblLibros.getSelectedRow() == 0) {
             txtNombre.requestFocus();
         }
-}//GEN-LAST:event_tblCategoriasKeyPressed
+}//GEN-LAST:event_tblLibrosKeyPressed
 
-    private void tblCategoriasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCategoriasKeyReleased
-        fila = tblCategorias.getSelectedRow();
-}//GEN-LAST:event_tblCategoriasKeyReleased
+    private void tblLibrosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblLibrosKeyReleased
+        fila = tblLibros.getSelectedRow();
+}//GEN-LAST:event_tblLibrosKeyReleased
 
     private void Buscar() {
         try {
             if(Util.EsExpresionGeneralPermitida(txtNombre.getText().trim().toUpperCase())) {
                 fila = 0;
-                ListarCategorias();
+                ListarLibros();
             }
             else {
-                if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                    ((mdlGeneral)(tblCategorias.getModel())).removeData();
+                if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                    ((mdlGeneral)(tblLibros.getModel())).removeData();
                 }
             }
         } 
@@ -350,7 +351,7 @@ public class frmLibros extends javax.swing.JDialog {
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_DOWN) {
-            tblCategorias.requestFocus();
+            tblLibros.requestFocus();
         }
         else {
             Buscar();
@@ -363,26 +364,26 @@ public class frmLibros extends javax.swing.JDialog {
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblLibros.getSelectedRow() != -1) {
+                Integer id = Integer.parseInt(((mdlGeneral)(tblLibros.getModel())).getValueAt(tblLibros.getSelectedRow(),0).toString());
 
-                CategoriaLN categoriaLN = new CategoriaLN();
-                Categoria tipoServicio = categoriaLN.ConsultarCategoria(id);
+                LibroLN libroLN = new LibroLN();
+                Libro tipoServicio = libroLN.ConsultarLibro(id);
 
                 if(tipoServicio != null) {
-                    frmCategoria ofrmCategoria = new frmCategoria(tipoServicio,"Ver");
-                    ofrmCategoria.setVisible(true);
+                    frmLibro ofrmLibro = new frmLibro(tipoServicio,"Ver");
+                    ofrmLibro.setVisible(true);
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,"Categoria no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Libro no registrado","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar un Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                tblLibros.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -395,13 +396,13 @@ public class frmLibros extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         try {
-            frmCategoria ofrmCategoria = new frmCategoria(null,"Nuevo");
-            ofrmCategoria.setVisible(true);
+            frmLibro ofrmLibro = new frmLibro(null,"Nuevo");
+            ofrmLibro.setVisible(true);
 
-            ListarCategorias();
+            ListarLibros();
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                tblLibros.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -414,28 +415,28 @@ public class frmLibros extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblLibros.getSelectedRow() != -1) {
+                Integer id = Integer.parseInt(((mdlGeneral)(tblLibros.getModel())).getValueAt(tblLibros.getSelectedRow(),0).toString());
 
-                CategoriaLN categoriaLN = new CategoriaLN();
-                Categoria tipoServicio = categoriaLN.ConsultarCategoria(id);
+                LibroLN libroLN = new LibroLN();
+                Libro tipoServicio = libroLN.ConsultarLibro(id);
 
                 if(tipoServicio != null) {
-                    frmCategoria ofrmCategoria = new frmCategoria(tipoServicio,"Modificar");
-                    ofrmCategoria.setVisible(true);
+                    frmLibro ofrmLibro = new frmLibro(tipoServicio,"Modificar");
+                    ofrmLibro.setVisible(true);
 
-                    ListarCategorias();
+                    ListarLibros();
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,"Categoria no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Libro no registrado","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar un Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                tblLibros.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -448,35 +449,35 @@ public class frmLibros extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                if(JOptionPane.showConfirmDialog(null,"¿Desea eliminar la Categoria?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblLibros.getSelectedRow() != -1) {
+                if(JOptionPane.showConfirmDialog(null,"¿Desea eliminar el Libro?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Integer id = Integer.parseInt(((mdlGeneral)(tblLibros.getModel())).getValueAt(tblLibros.getSelectedRow(),0).toString());
 
-                    CategoriaLN categoriaLN = new CategoriaLN();
-                    categoriaLN.EliminarCategoria(new Categoria(id));
+                    LibroLN libroLN = new LibroLN();
+                    libroLN.EliminarLibro(new Libro(id));
 
-                    JOptionPane.showMessageDialog(null,"Categoria eliminada correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Libro eliminado correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
 
                     if(fila > 0) {
                         fila--;
                     }
 
-                    ListarCategorias();
+                    ListarLibros();
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar un Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblLibros.getModel())).getRowCount() > 0) {
+                tblLibros.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
             }
        }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null,"No se puede eliminar la Categoria","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"No se puede eliminar el Libro","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
 }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -531,7 +532,7 @@ public class frmLibros extends javax.swing.JDialog {
     private javax.swing.JLabel lblSubencabezado;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JScrollPane spTemas;
-    private javax.swing.JTable tblCategorias;
+    private javax.swing.JTable tblLibros;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,7 +2,8 @@ package SGB.GestionBiblioteca.Presentacion;
 
 
 import SGB.GestionBiblioteca.Entidades.Categoria;
-import SGB.GestionBiblioteca.LogicaNegocio.CategoriaLN;
+import SGB.GestionBiblioteca.Entidades.Libro;
+import SGB.GestionBiblioteca.LogicaNegocio.LibroLN;
 import Util.Util;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
@@ -10,15 +11,15 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class frmLibro extends javax.swing.JDialog {
-    private Categoria categoria;
+    private Libro libro;
     private String modo;
 
-    public frmLibro(Categoria categoria, String modo) {
+    public frmLibro(Libro libro, String modo) {
         super(new JDialog(),true);
 
         initComponents();
 
-        this.categoria = categoria;
+        this.libro = libro;
         this.modo = modo;
 
         Util.InicializarContenedor(this.getContentPane());
@@ -27,7 +28,7 @@ public class frmLibro extends javax.swing.JDialog {
 
         Util.AplicarIcono(this);
 
-        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Categoria","Permite registrar o actualizar los datos de una categoria");
+        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Libro","Permite registrar o actualizar los datos de un libro");
 
         Util.AplicarSubencabezado(this,lblSubencabezado,"Subencabezado",modo);
 
@@ -51,15 +52,20 @@ public class frmLibro extends javax.swing.JDialog {
         Util.InicializarContenedor(pnlDetalle);
 
         if(modo.equals("Nuevo")) {
-            categoria = new Categoria();
+            libro = new Libro();
         }
         else if(modo.equals("Ver") || modo.equals("Modificar")) {
-            if(categoria != null) {
-                txtCodigo.setText(categoria.getCodcat());
-                txtNombre.setText(categoria.getNomcat());
+            if(libro != null) {
+                txtCodigo.setText(libro.getCodlibro());
+                txtNombre.setText(libro.getNomlibro());
+                txtNumpag.setText(libro.getNumpag().toString());
+                txtEdicion.setText(libro.getEdicion().toString());
+                txtGenero.setText(libro.getGenero());
+                txtCodigoCategoria.setText(libro.getOcategoria().getCodcat());
+                txtCategoria.setText(libro.getOcategoria().getNomcat());
             }
             else {
-                JOptionPane.showMessageDialog(null,"Se debe indicar la Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Se debe indicar el Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
 
                 this.dispose();
             }
@@ -81,10 +87,10 @@ public class frmLibro extends javax.swing.JDialog {
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblNombre1 = new javax.swing.JLabel();
-        txtNombre1 = new javax.swing.JTextField();
+        txtNumpag = new javax.swing.JTextField();
         lblNombre2 = new javax.swing.JLabel();
-        txtNombre2 = new javax.swing.JTextField();
-        txtNombre3 = new javax.swing.JTextField();
+        txtEdicion = new javax.swing.JTextField();
+        txtGenero = new javax.swing.JTextField();
         lblNombre3 = new javax.swing.JLabel();
         lblCategoria = new javax.swing.JLabel();
         txtCodigoCategoria = new javax.swing.JTextField();
@@ -140,42 +146,42 @@ public class frmLibro extends javax.swing.JDialog {
         lblNombre1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombre1.setText("Num. Paginas");
 
-        txtNombre1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtNombre1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtNumpag.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtNumpag.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombre1FocusGained(evt);
+                txtNumpagFocusGained(evt);
             }
         });
-        txtNombre1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNumpag.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNombre1KeyPressed(evt);
+                txtNumpagKeyPressed(evt);
             }
         });
 
         lblNombre2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombre2.setText("Edición");
 
-        txtNombre2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtNombre2.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtEdicion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtEdicion.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombre2FocusGained(evt);
+                txtEdicionFocusGained(evt);
             }
         });
-        txtNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtEdicion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNombre2KeyPressed(evt);
+                txtEdicionKeyPressed(evt);
             }
         });
 
-        txtNombre3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        txtNombre3.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtGenero.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtGenero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNombre3FocusGained(evt);
+                txtGeneroFocusGained(evt);
             }
         });
-        txtNombre3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtGenero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNombre3KeyPressed(evt);
+                txtGeneroKeyPressed(evt);
             }
         });
 
@@ -218,50 +224,61 @@ public class frmLibro extends javax.swing.JDialog {
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblSubencabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCodigo)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(180, 180, 180))
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addComponent(lblNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre3))
+                        .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarCategoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSubencabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCodigo)
+                                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(180, 180, 180))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)))
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(lblNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtGenero))
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarCategoria)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                        .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNumpag, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                        .addComponent(lblNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         pnlDetalleLayout.setVerticalGroup(
             pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                .addComponent(lblSubencabezado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSubencabezado)
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarCategoria)
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCodigoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -272,22 +289,16 @@ public class frmLibro extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumpag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarCategoria)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -341,8 +352,8 @@ public class frmLibro extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -354,46 +365,50 @@ public class frmLibro extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try  {
-            if(JOptionPane.showConfirmDialog(null,"¿Desea registrar la Categoria?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if(JOptionPane.showConfirmDialog(null,"¿Desea registrar la Libro?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 if(txtNombre.getText().trim().toUpperCase().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre de la Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre de la Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                     txtNombre.requestFocus();
                     return;
                 }
 
                if(txtNombre.getText().trim().toUpperCase().length() > 50) {
-                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del Categoria (Máximo 50 caracteres)","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del Libro (Máximo 50 caracteres)","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                     txtNombre.requestFocus();
                     return;
                 }
 
                if(!Util.EsExpresionGeneralPermitida(txtNombre.getText().trim().toUpperCase())) {
-                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre de la Categoria (Expresión general permitida)","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Debe ingresar el nombre de la Libro (Expresión general permitida)","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                     txtNombre.requestFocus();
                     return;
                 }
 
-                categoria.setCodcat(modo.equals("Nuevo")?null:txtCodigo.getText().trim().toUpperCase());
-                categoria.setNomcat(txtNombre.getText().trim().toUpperCase());
+                libro.setCodlibro(modo.equals("Nuevo")?null:txtCodigo.getText().trim().toUpperCase());
+                libro.setNomlibro(txtNombre.getText().trim().toUpperCase());
+                libro.setNumpag(Integer.parseInt(txtNumpag.getText().trim().toUpperCase()));
+                libro.setEdicion(Integer.parseInt(txtEdicion.getText().trim().toUpperCase()));
+                libro.setGenero(txtGenero.getText().trim().toUpperCase());
+                libro.setOcategoria(new Categoria(Integer.parseInt(txtCodigoCategoria.getText().trim().toUpperCase())));
+                
+                LibroLN libroLN = new LibroLN();
 
-                CategoriaLN categoriaLN = new CategoriaLN();
+                Libro libroEncontrado = libroLN.ConsultarLibro(libro);
 
-                Categoria categoriaEncontrado = categoriaLN.ConsultarCategoria(categoria);
-
-                if(categoriaEncontrado != null) {
+                if(libroEncontrado != null) {
                     JOptionPane.showMessageDialog(null,"El código y el nombre deben ser únicos","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                     txtCodigo.requestFocus();
                     return;
                 }
 
                 if(modo.equals("Nuevo")) {
-                    categoriaLN.RegistrarCategoria(categoria);
+                    libroLN.RegistrarLibro(libro);
                 }
                 else {
-                    categoriaLN.ModificarCategoria(categoria);
+                    libroLN.ModificarLibro(libro);
                 }
 
-                JOptionPane.showMessageDialog(null,"Categoria registrada correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Libro registrado correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
 
                 this.dispose();
             }
@@ -435,29 +450,29 @@ public class frmLibro extends javax.swing.JDialog {
         txtNombre.selectAll();
     }//GEN-LAST:event_txtNombreFocusGained
 
-    private void txtNombre1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre1FocusGained
+    private void txtNumpagFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumpagFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre1FocusGained
+    }//GEN-LAST:event_txtNumpagFocusGained
 
-    private void txtNombre1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre1KeyPressed
+    private void txtNumpagKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumpagKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre1KeyPressed
+    }//GEN-LAST:event_txtNumpagKeyPressed
 
-    private void txtNombre2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre2FocusGained
+    private void txtEdicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEdicionFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre2FocusGained
+    }//GEN-LAST:event_txtEdicionFocusGained
 
-    private void txtNombre2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre2KeyPressed
+    private void txtEdicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEdicionKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre2KeyPressed
+    }//GEN-LAST:event_txtEdicionKeyPressed
 
-    private void txtNombre3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre3FocusGained
+    private void txtGeneroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtGeneroFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre3FocusGained
+    }//GEN-LAST:event_txtGeneroFocusGained
 
-    private void txtNombre3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre3KeyPressed
+    private void txtGeneroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGeneroKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombre3KeyPressed
+    }//GEN-LAST:event_txtGeneroKeyPressed
 
     private void txtCodigoCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoCategoriaKeyPressed
         // TODO add your handling code here:
@@ -492,9 +507,9 @@ public class frmLibro extends javax.swing.JDialog {
     public static javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
     public static javax.swing.JTextField txtCodigoCategoria;
+    private javax.swing.JTextField txtEdicion;
+    private javax.swing.JTextField txtGenero;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JTextField txtNombre2;
-    private javax.swing.JTextField txtNombre3;
+    private javax.swing.JTextField txtNumpag;
     // End of variables declaration//GEN-END:variables
 }
