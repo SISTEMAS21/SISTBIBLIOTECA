@@ -47,7 +47,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="lblEncabezado" min="-2" pref="57" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnlDetalle" min="-2" pref="284" max="-2" attributes="2"/>
+              <Component id="pnlDetalle" min="-2" pref="320" max="-2" attributes="2"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelar" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
@@ -197,7 +197,7 @@
                       <Component id="txtAutor" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCodigoAutor" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="69" max="32767" attributes="0"/>
+                  <EmptySpace pref="105" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

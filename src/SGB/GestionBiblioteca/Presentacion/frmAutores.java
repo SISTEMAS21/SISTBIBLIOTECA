@@ -1,8 +1,8 @@
 package SGB.GestionBiblioteca.Presentacion;
 
 
-import SGB.GestionBiblioteca.Entidades.Categoria;
-import SGB.GestionBiblioteca.LogicaNegocio.CategoriaLN;
+import SGB.GestionBiblioteca.Entidades.Autor;
+import SGB.GestionBiblioteca.LogicaNegocio.AutorLN;
 import Util.Util;
 import Util.mdlGeneral;
 import java.awt.event.KeyEvent;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class frmAutores extends javax.swing.JDialog {
-    private String[] columnas = {"Id","N°","Código","Nombre"};
+    private String[] columnas = {"Id","N°","Código","Nombre","Ap.Paterno","Ap.Materno"};
     private Integer fila = 0;
 
     public frmAutores() {
@@ -28,33 +28,35 @@ public class frmAutores extends javax.swing.JDialog {
 
         Util.AplicarIcono(this);
 
-        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Categorias","Permite mantener un registro actualizado de las categorias");
+        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Autors","Permite mantener un registro actualizado de las categorias");
 
         Util.AplicarSubencabezado(this,lblSubencabezado,"Subencabezado","Mantenimiento");
 
-        tblCategorias.setModel(new mdlGeneral(columnas));
+        tblAutores.setModel(new mdlGeneral(columnas));
 
-        Integer[] anchos = {0,40,50,580};
-        Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.LEFT};
-        String[] formatos = {"Cadena","Cadena","Cadena","Cadena"};
-        String[] modos = {"Normal","Normal","Normal","Resaltado"};
+        Integer[] anchos = {0,40,100,100,100,100};
+        Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER};
+        String[] formatos = {"Cadena","Cadena","Cadena","Cadena","Cadena","Cadena"};
+        String[] modos = {"Normal","Normal","Normal","Normal","Normal","Normal"};
 
-        Util.AplicarEstilos(tblCategorias,anchos,alineaciones,formatos,modos);
+        Util.AplicarEstilos(tblAutores,anchos,alineaciones,formatos,modos);
 
         Buscar();
     }
 
-    private List aVector(List<Categoria> lista) {
+    private List aVector(List<Autor> lista) {
         List datos = new ArrayList();
         Object[] newdata;
 
         for(int i = 0; i < lista.size(); i++) {
-            newdata = new Object[4];
+            newdata = new Object[6];
 
-            newdata[0] = lista.get(i).getIdcat();
+            newdata[0] = lista.get(i).getIdautor();
             newdata[1] = (i + 1);
-            newdata[2] = lista.get(i).getCodcat();
-            newdata[3] = lista.get(i).getNomcat();
+            newdata[2] = lista.get(i).getCodautor();
+            newdata[3] = lista.get(i).getNomautor();
+            newdata[4] = lista.get(i).getApepatautor();
+            newdata[5] = lista.get(i).getApematautor();
 
             datos.add(newdata);
         }
@@ -62,13 +64,13 @@ public class frmAutores extends javax.swing.JDialog {
         return datos;
     }
 
-    private void ListarCategorias() throws Exception {
+    private void ListarAutors() throws Exception {
         try {
-            CategoriaLN categoriaLN = new CategoriaLN();
-            ((mdlGeneral)(tblCategorias.getModel())).setData(aVector(categoriaLN.ConsultarCategorias(txtNombre.getText().trim().toUpperCase())));
+            AutorLN categoriaLN = new AutorLN();
+            ((mdlGeneral)(tblAutores.getModel())).setData(aVector(categoriaLN.ConsultarAutores(txtNombre.getText().trim().toUpperCase())));
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.changeSelection(fila,0,false,false);
+            if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                tblAutores.changeSelection(fila,0,false,false);
             }
             else {
                 txtNombre.requestFocus();
@@ -90,7 +92,7 @@ public class frmAutores extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         spTemas = new javax.swing.JScrollPane();
-        tblCategorias = new javax.swing.JTable();
+        tblAutores = new javax.swing.JTable();
         btnVer = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -140,7 +142,7 @@ public class frmAutores extends javax.swing.JDialog {
             }
         });
 
-        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        tblAutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -148,20 +150,20 @@ public class frmAutores extends javax.swing.JDialog {
 
             }
         ));
-        tblCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblAutores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCategoriasMouseClicked(evt);
+                tblAutoresMouseClicked(evt);
             }
         });
-        tblCategorias.addKeyListener(new java.awt.event.KeyAdapter() {
+        tblAutores.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tblCategoriasKeyPressed(evt);
+                tblAutoresKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblCategoriasKeyReleased(evt);
+                tblAutoresKeyReleased(evt);
             }
         });
-        spTemas.setViewportView(tblCategorias);
+        spTemas.setViewportView(tblAutores);
 
         javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
@@ -190,7 +192,7 @@ public class frmAutores extends javax.swing.JDialog {
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spTemas, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addComponent(spTemas, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -310,36 +312,36 @@ public class frmAutores extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMouseClicked
+    private void tblAutoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAutoresMouseClicked
         try {
             if(evt.getClickCount() == 1) {
-                fila = tblCategorias.getSelectedRow();
+                fila = tblAutores.getSelectedRow();
             }
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null,e.getMessage(),"Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
-}//GEN-LAST:event_tblCategoriasMouseClicked
+}//GEN-LAST:event_tblAutoresMouseClicked
 
-    private void tblCategoriasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCategoriasKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_UP && tblCategorias.getSelectedRow() == 0) {
+    private void tblAutoresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblAutoresKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_UP && tblAutores.getSelectedRow() == 0) {
             txtNombre.requestFocus();
         }
-}//GEN-LAST:event_tblCategoriasKeyPressed
+}//GEN-LAST:event_tblAutoresKeyPressed
 
-    private void tblCategoriasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCategoriasKeyReleased
-        fila = tblCategorias.getSelectedRow();
-}//GEN-LAST:event_tblCategoriasKeyReleased
+    private void tblAutoresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblAutoresKeyReleased
+        fila = tblAutores.getSelectedRow();
+}//GEN-LAST:event_tblAutoresKeyReleased
 
     private void Buscar() {
         try {
             if(Util.EsExpresionGeneralPermitida(txtNombre.getText().trim().toUpperCase())) {
                 fila = 0;
-                ListarCategorias();
+                ListarAutors();
             }
             else {
-                if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                    ((mdlGeneral)(tblCategorias.getModel())).removeData();
+                if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                    ((mdlGeneral)(tblAutores.getModel())).removeData();
                 }
             }
         } 
@@ -350,7 +352,7 @@ public class frmAutores extends javax.swing.JDialog {
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
         if(evt.getKeyCode() == KeyEvent.VK_DOWN) {
-            tblCategorias.requestFocus();
+            tblAutores.requestFocus();
         }
         else {
             Buscar();
@@ -363,26 +365,26 @@ public class frmAutores extends javax.swing.JDialog {
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblAutores.getSelectedRow() != -1) {
+                Integer id = Integer.parseInt(((mdlGeneral)(tblAutores.getModel())).getValueAt(tblAutores.getSelectedRow(),0).toString());
 
-                CategoriaLN categoriaLN = new CategoriaLN();
-                Categoria tipoServicio = categoriaLN.ConsultarCategoria(id);
+                AutorLN categoriaLN = new AutorLN();
+                Autor tipoServicio = categoriaLN.ConsultarAutor(id);
 
                 if(tipoServicio != null) {
-                    frmCategoria ofrmCategoria = new frmCategoria(tipoServicio,"Ver");
-                    ofrmCategoria.setVisible(true);
+                    frmAutor ofrmAutor = new frmAutor(tipoServicio,"Ver");
+                    ofrmAutor.setVisible(true);
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,"Categoria no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Autor no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar una Autor","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                tblAutores.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -395,13 +397,13 @@ public class frmAutores extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         try {
-            frmCategoria ofrmCategoria = new frmCategoria(null,"Nuevo");
-            ofrmCategoria.setVisible(true);
+            frmAutor ofrmAutor = new frmAutor(null,"Nuevo");
+            ofrmAutor.setVisible(true);
 
-            ListarCategorias();
+            ListarAutors();
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                tblAutores.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -414,28 +416,28 @@ public class frmAutores extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblAutores.getSelectedRow() != -1) {
+                Integer id = Integer.parseInt(((mdlGeneral)(tblAutores.getModel())).getValueAt(tblAutores.getSelectedRow(),0).toString());
 
-                CategoriaLN categoriaLN = new CategoriaLN();
-                Categoria tipoServicio = categoriaLN.ConsultarCategoria(id);
+                AutorLN categoriaLN = new AutorLN();
+                Autor tipoServicio = categoriaLN.ConsultarAutor(id);
 
                 if(tipoServicio != null) {
-                    frmCategoria ofrmCategoria = new frmCategoria(tipoServicio,"Modificar");
-                    ofrmCategoria.setVisible(true);
+                    frmAutor ofrmAutor = new frmAutor(tipoServicio,"Modificar");
+                    ofrmAutor.setVisible(true);
 
-                    ListarCategorias();
+                    ListarAutors();
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,"Categoria no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Autor no registrada","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar una Autor","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                tblAutores.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
@@ -448,35 +450,35 @@ public class frmAutores extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            if(tblCategorias.getSelectedRow() != -1) {
-                if(JOptionPane.showConfirmDialog(null,"¿Desea eliminar la Categoria?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    Integer id = Integer.parseInt(((mdlGeneral)(tblCategorias.getModel())).getValueAt(tblCategorias.getSelectedRow(),0).toString());
+            if(tblAutores.getSelectedRow() != -1) {
+                if(JOptionPane.showConfirmDialog(null,"¿Desea eliminar la Autor?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    Integer id = Integer.parseInt(((mdlGeneral)(tblAutores.getModel())).getValueAt(tblAutores.getSelectedRow(),0).toString());
 
-                    CategoriaLN categoriaLN = new CategoriaLN();
-                    categoriaLN.EliminarCategoria(new Categoria(id));
+                    AutorLN categoriaLN = new AutorLN();
+                    categoriaLN.EliminarAutor(new Autor(id));
 
-                    JOptionPane.showMessageDialog(null,"Categoria eliminada correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Autor eliminada correctamente","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
 
                     if(fila > 0) {
                         fila--;
                     }
 
-                    ListarCategorias();
+                    ListarAutors();
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null,"Debe seleccionar una Categoria","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Debe seleccionar una Autor","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
             }
 
-            if(((mdlGeneral)(tblCategorias.getModel())).getRowCount() > 0) {
-                tblCategorias.requestFocus();
+            if(((mdlGeneral)(tblAutores.getModel())).getRowCount() > 0) {
+                tblAutores.requestFocus();
             }
             else {
                 txtNombre.requestFocus();
             }
        }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null,"No se puede eliminar la Categoria","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"No se puede eliminar la Autor","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
 }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -531,7 +533,7 @@ public class frmAutores extends javax.swing.JDialog {
     private javax.swing.JLabel lblSubencabezado;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JScrollPane spTemas;
-    private javax.swing.JTable tblCategorias;
+    private javax.swing.JTable tblAutores;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
