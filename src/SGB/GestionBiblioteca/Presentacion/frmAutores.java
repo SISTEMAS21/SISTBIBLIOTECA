@@ -28,13 +28,13 @@ public class frmAutores extends javax.swing.JDialog {
 
         Util.AplicarIcono(this);
 
-        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","Autors","Permite mantener un registro actualizado de las categorias");
+        Util.AplicarEncabezado(this,lblEncabezado,"Encabezado","AutorEs","Permite mantener un registro actualizado de los Autores");
 
         Util.AplicarSubencabezado(this,lblSubencabezado,"Subencabezado","Mantenimiento");
 
         tblAutores.setModel(new mdlGeneral(columnas));
 
-        Integer[] anchos = {0,40,100,100,100,100};
+        Integer[] anchos = {0,40,100,180,100,100};
         Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER,JLabel.CENTER};
         String[] formatos = {"Cadena","Cadena","Cadena","Cadena","Cadena","Cadena"};
         String[] modos = {"Normal","Normal","Normal","Normal","Normal","Normal"};

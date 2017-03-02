@@ -1,6 +1,7 @@
 package SGB.GestionBiblioteca.Presentacion;
 
 
+import SGB.GestionBiblioteca.Entidades.Autor;
 import SGB.GestionBiblioteca.Entidades.Categoria;
 import SGB.GestionBiblioteca.Entidades.Libro;
 import SGB.GestionBiblioteca.LogicaNegocio.LibroLN;
@@ -46,7 +47,8 @@ public class frmLibro extends javax.swing.JDialog {
 
             btnCancelar.requestFocus();
         }
-        txtCodigoCategoria.setVisible(false);
+//        txtCodigoCategoria.setVisible(false);
+//        txtCodigoAutor.setVisible(false);
     }  
 
     
@@ -63,8 +65,10 @@ public class frmLibro extends javax.swing.JDialog {
                 txtNumpag.setText(libro.getNumpag().toString());
                 txtEdicion.setText(libro.getEdicion().toString());
                 txtGenero.setText(libro.getGenero());
-                txtCodigoCategoria.setText(libro.getOcategoria().getCodcat());
+                txtCodigoCategoria.setText(libro.getOcategoria().getIdcat().toString());
                 txtCategoria.setText(libro.getOcategoria().getNomcat());
+                txtCodigoAutor.setText(libro.getOautor().getIdautor().toString());
+                txtAutor.setText(libro.getOautor().getNomautor());
             }
             else {
                 JOptionPane.showMessageDialog(null,"Se debe indicar el Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
@@ -415,7 +419,7 @@ public class frmLibro extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try  {
-            if(JOptionPane.showConfirmDialog(null,"¿Desea registrar la Libro?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if(JOptionPane.showConfirmDialog(null,"¿Desea registrar el Libro?","Mensaje del Sistema",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 if(txtNombre.getText().trim().toUpperCase().isEmpty()) {
                     JOptionPane.showMessageDialog(null,"Debe ingresar el nombre del Libro","Mensaje del Sistema",JOptionPane.WARNING_MESSAGE);
                     txtNombre.requestFocus();
@@ -441,11 +445,13 @@ public class frmLibro extends javax.swing.JDialog {
                 }
 
                 libro.setCodlibro(modo.equals("Nuevo")?null:txtCodigo.getText().trim().toUpperCase());
+                libro.setCodlibro(txtCodigo.getText());
                 libro.setNomlibro(txtNombre.getText().trim().toUpperCase());
                 libro.setNumpag(Integer.parseInt(txtNumpag.getText().trim().toUpperCase()));
                 libro.setEdicion(Integer.parseInt(txtEdicion.getText().trim().toUpperCase()));
                 libro.setGenero(txtGenero.getText().trim().toUpperCase());
                 libro.setOcategoria(new Categoria(Integer.parseInt(txtCodigoCategoria.getText().trim().toUpperCase())));
+                libro.setOautor(new Autor(Integer.parseInt(txtCodigoAutor.getText().trim().toUpperCase())));
                 
                 LibroLN libroLN = new LibroLN();
 

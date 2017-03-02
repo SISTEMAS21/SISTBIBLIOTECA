@@ -85,9 +85,17 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",categoria_idcat";
-            sql = sql + ",autor_idautor";
+            sql = sql + ",categoria.idcat";
+            sql = sql + ",categoria.codcat";
+            sql = sql + ",categoria.nomcat";
+            sql = sql + ",autor.idautor";
+            sql = sql + ",autor.codautor";
+            sql = sql + ",autor.nomautor";
+            sql = sql + ",autor.apepatautor";
+            sql = sql + ",autor.apematautor";
             sql = sql + " from libro";
+            sql = sql + " inner join categoria on libro.idcat = categoria.idcat";
+            sql = sql + " inner join autor on libro.idautor = autor.idautor";
             sql = sql + " where";
             sql = sql + " nomlibro like '%" + nombre +"%'";
             sql = sql + " order by";
@@ -111,7 +119,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
-                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"), rs.getString("apepatautor"), rs.getString("apematautor")));
                 
                 lista.add(obj);
             }
@@ -142,8 +150,8 @@ public class LibroAD extends EntidadAD{
             sql = sql + " or numpag = '" + libro.getNumpag() + "'";
             sql = sql + " or edicion = '" + libro.getEdicion() + "'";
             sql = sql + " or genero = '" + libro.getGenero() + "'";
-            sql = sql + " and idcat = '" + libro.getOcategoria().getIdcat() + "'";
-            sql = sql + " and idautor = '" + libro.getOautor().getIdautor() + "')";
+            sql = sql + " and categoria_idcat = '" + libro.getOcategoria().getIdcat() + "'";
+            sql = sql + " and autor_idautor = '" + libro.getOautor().getIdautor() + "')";
             sql = sql + ";";
             
             Libro obj = null;
@@ -180,10 +188,17 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",categoria_idcat";
-            sql = sql + ",autor_idautor";
-//            sql = sql + ",categoria.codcat";
-//            sql = sql + ",categoria.nomcat";
+            sql = sql + ",categoria.idcat";
+            sql = sql + ",categoria.codcat";
+            sql = sql + ",categoria.nomcat";
+            sql = sql + ",autor.idautor";
+            sql = sql + ",autor.codautor";
+            sql = sql + ",autor.nomautor";
+            sql = sql + ",autor.apepatautor";
+            sql = sql + ",autor.apematautor";
+            sql = sql + " from libro";
+            sql = sql + " inner join categoria on libro.idcat = categoria.idcat";
+            sql = sql + " inner join autor on libro.idautor = autor.idautor";
             sql = sql + " from libro";
             sql = sql + " where" ;
             sql = sql + " codlibro = '" + codigo + "'";
@@ -203,7 +218,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
-                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"), rs.getString("apepatautor"), rs.getString("apematautor")));
             }
             return obj;
         } catch (Exception e) {
@@ -228,11 +243,17 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",categoria_idcat";
-            sql = sql + ",autor_idautor";
-//            sql = sql + ",categoria.codcat";
-//            sql = sql + ",categoria.nomcat";
+            sql = sql + ",categoria.idcat";
+            sql = sql + ",categoria.codcat";
+            sql = sql + ",categoria.nomcat";
+            sql = sql + ",autor.idautor";
+            sql = sql + ",autor.codautor";
+            sql = sql + ",autor.nomautor";
+            sql = sql + ",autor.apepatautor";
+            sql = sql + ",autor.apematautor";
             sql = sql + " from libro";
+            sql = sql + " inner join categoria on libro.idcat = categoria.idcat";
+            sql = sql + " inner join autor on libro.idautor = autor.idautor";
             sql = sql + " where";
             sql = sql + " idlibro = "+ id.toString();
             sql = sql + ";";
@@ -252,7 +273,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
-                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"), rs.getString("apepatautor"), rs.getString("apematautor")));
             }
             return obj;
         } catch (Exception e) {
@@ -271,7 +292,7 @@ public class LibroAD extends EntidadAD{
     public void Insertar(Libro obj) throws Exception{
         try {
             obj.setIdlibro(getId());
-            obj.setCodlibro(getCodigo());
+            //obj.setCodlibro(getCodigo());
             
             String dml = "insert into libro(";
             dml = dml + " idlibro";

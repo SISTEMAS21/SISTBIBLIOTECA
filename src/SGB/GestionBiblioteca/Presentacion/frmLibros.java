@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class frmLibros extends javax.swing.JDialog {
-    private String[] columnas = {"Id","N°","Código","Nombre","Categoria"};
+    private String[] columnas = {"Id","N°","Código","Nombre","Categoria","Autor"};
     private Integer fila = 0;
 
     public frmLibros() {
@@ -34,10 +34,10 @@ public class frmLibros extends javax.swing.JDialog {
 
         tblLibros.setModel(new mdlGeneral(columnas));
 
-        Integer[] anchos = {0,40,50,520,60};
-        Integer[] alineaciones = {JLabel.LEFT,JLabel.CENTER,JLabel.CENTER,JLabel.LEFT,JLabel.LEFT};
-        String[] formatos = {"Cadena","Cadena","Cadena","Cadena","Cadena"};
-        String[] modos = {"Normal","Normal","Normal","Resaltado","Normal"};
+        Integer[] anchos = {0,40,120,150,100,100};
+        Integer[] alineaciones = {JLabel.LEFT,JLabel.LEFT,JLabel.CENTER,JLabel.LEFT,JLabel.LEFT,JLabel.LEFT};
+        String[] formatos = {"Cadena","Cadena","Cadena","Cadena","Cadena","Cadena"};
+        String[] modos = {"Normal","Normal","Normal","Normal","Normal","Normal"};
 
         Util.AplicarEstilos(tblLibros,anchos,alineaciones,formatos,modos);
 
@@ -49,13 +49,14 @@ public class frmLibros extends javax.swing.JDialog {
         Object[] newdata;
 
         for(int i = 0; i < lista.size(); i++) {
-            newdata = new Object[5];
+            newdata = new Object[6];
 
             newdata[0] = lista.get(i).getIdlibro();
             newdata[1] = (i + 1);
             newdata[2] = lista.get(i).getCodlibro();
             newdata[3] = lista.get(i).getNomlibro();
             newdata[4] = lista.get(i).getOcategoria().getNomcat();
+            newdata[5] = lista.get(i).getOautor().getNomautor();
 
             datos.add(newdata);
         }

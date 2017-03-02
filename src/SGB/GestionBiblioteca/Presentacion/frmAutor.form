@@ -45,8 +45,8 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="lblEncabezado" min="-2" pref="57" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnlDetalle" min="-2" pref="150" max="-2" attributes="2"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Component id="pnlDetalle" min="-2" pref="222" max="-2" attributes="2"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelar" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="btnGuardar" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
@@ -100,7 +100,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="txtNombre" min="-2" pref="325" max="-2" attributes="1"/>
-                              <Component id="txtCodigo" min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="txtCodigo" min="-2" pref="55" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -142,7 +142,7 @@
                       <Component id="lblNombre2" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="txtApemat" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="83" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

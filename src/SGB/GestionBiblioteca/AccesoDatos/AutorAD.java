@@ -47,7 +47,7 @@ public class AutorAD extends EntidadAD{
     
     public String getCodigo() throws Exception{
         try {
-            String sql = "select lpad(cast(case when max(cast(codautor as character)) is null then 1 else (max(cast(codautor as character)) + 1) end as character),10,'0') as codautor from autor";
+            String sql = "select lpad(cast(case when max(cast(codautor as character)) is null then 1 else (max(cast(codautor as character)) + 1) end as character),2,'0') as codautor from autor";
             
             String codigo = "";
             
@@ -104,8 +104,8 @@ public class AutorAD extends EntidadAD{
                 obj.setIdautor(rs.getInt("idautor"));
                 obj.setCodautor(rs.getString("codautor"));
                 obj.setNomautor(rs.getString("nomautor"));
-                obj.setApepatautor(rs.getString("apepat"));
-                obj.setApematautor(rs.getString("apemat"));
+                obj.setApepatautor(rs.getString("apepatautor"));
+                obj.setApematautor(rs.getString("apematautor"));
                 
                 lista.add(obj);
             }
@@ -133,8 +133,8 @@ public class AutorAD extends EntidadAD{
             sql = sql + " idautor <> " + (autor.getIdautor() == null?"0":autor.getIdautor().toString());
             sql = sql + " and (codautor = '"+ autor.getCodautor() + "'";
             sql = sql + " or nomautor = '" + autor.getNomautor() + "'";
-            sql = sql + " or apepat = '" + autor.getApepatautor() + "'";
-            sql = sql + " or apemat = '" + autor.getApematautor() + "')";
+            sql = sql + " or apepatautor = '" + autor.getApepatautor() + "'";
+            sql = sql + " or apematautor = '" + autor.getApematautor() + "')";
             sql = sql + ";";
             
             Autor obj = null;
@@ -185,8 +185,8 @@ public class AutorAD extends EntidadAD{
                 obj.setIdautor(rs.getInt("idautor"));
                 obj.setCodautor(rs.getString("codautor"));
                 obj.setNomautor(rs.getString("nomautor"));
-                obj.setApepatautor(rs.getString("apepat"));
-                obj.setApematautor(rs.getString("apemat"));
+                obj.setApepatautor(rs.getString("apepatautor"));
+                obj.setApematautor(rs.getString("apematautor"));
             }
             return obj;
         } catch (Exception e) {
@@ -226,8 +226,8 @@ public class AutorAD extends EntidadAD{
                 obj.setIdautor(rs.getInt("idautor"));
                 obj.setCodautor(rs.getString("codautor"));
                 obj.setNomautor(rs.getString("nomautor"));
-                obj.setApepatautor(rs.getString("apepat"));
-                obj.setApematautor(rs.getString("apemat"));
+                obj.setApepatautor(rs.getString("apepatautor"));
+                obj.setApematautor(rs.getString("apematautor"));
             }
             return obj;
         } catch (Exception e) {
@@ -252,8 +252,8 @@ public class AutorAD extends EntidadAD{
             dml = dml + " idautor";
             dml = dml + ",codautor";
             dml = dml + ",nomautor";
-            dml = dml + ",apepat";
-            dml = dml + ",apemat";
+            dml = dml + ",apepatautor";
+            dml = dml + ",apematautor";
             dml = dml + ") values (";
             dml = dml + " '"+ obj.getIdautor().toString() +"'";
             dml = dml + ",'" + obj.getCodautor() + "'";
@@ -273,8 +273,8 @@ public class AutorAD extends EntidadAD{
             String dml = "update autor set";
             dml = dml + " codautor = '" +obj.getCodautor() + "'";
             dml = dml + ",nomautor = '" +obj.getNomautor() + "'";
-            dml = dml + ",apepat = '" +obj.getApepatautor() + "'";
-            dml = dml + ",apemat = '" +obj.getApematautor() + "'";
+            dml = dml + ",apepatautor = '" +obj.getApepatautor() + "'";
+            dml = dml + ",apematautor = '" +obj.getApematautor() + "'";
             dml = dml + " where";
             dml = dml + " idautor = " + obj.getIdautor().toString();
             dml = dml + ";";
