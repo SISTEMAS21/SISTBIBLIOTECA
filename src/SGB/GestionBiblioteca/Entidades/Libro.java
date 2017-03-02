@@ -7,6 +7,7 @@ public class Libro {
     private Integer Edicion;
     private String Genero;
     private Categoria ocategoria;
+    private Autor oautor;
 
     public Libro() {
     }
@@ -15,7 +16,7 @@ public class Libro {
         this.Idlibro = Idlibro;
     }
 
-    public Libro(Integer Idlibro, String Codlibro, String Nomlibro, Integer Numpag, Integer Edicion, String Genero, Categoria ocategoria) {
+    public Libro(Integer Idlibro, String Codlibro, String Nomlibro, Integer Numpag, Integer Edicion, String Genero, Categoria ocategoria, Autor oautor) {
         this.Idlibro = Idlibro;
         this.Codlibro = Codlibro;
         this.Nomlibro = Nomlibro;
@@ -23,6 +24,7 @@ public class Libro {
         this.Edicion = Edicion;
         this.Genero = Genero;
         this.ocategoria = ocategoria;
+        this.oautor = oautor;
     }
 
     public Integer getIdlibro() {
@@ -81,6 +83,13 @@ public class Libro {
         this.ocategoria = ocategoria;
     }
 
-     
+    public Autor getOautor() {
+        return oautor;
+    }
+
+    public void setOautor(Autor oautor) {
+        this.oautor = oautor;
+    }
+
     
 }

@@ -42,7 +42,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu9 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("\t\t\t\t\tSistema \"ADMINISTRATIVO DE COLEGIO\"");
+        setTitle("SISTEMA DE GESTION DE BIBLIOTECA\n");
 
         pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setToolTipText("SISTEMA DE BIBLIOTECA");

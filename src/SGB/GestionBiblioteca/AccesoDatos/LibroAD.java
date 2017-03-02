@@ -1,6 +1,7 @@
 package SGB.GestionBiblioteca.AccesoDatos;
 
 import Conector.EntidadAD;
+import SGB.GestionBiblioteca.Entidades.Autor;
 import SGB.GestionBiblioteca.Entidades.Categoria;
 import SGB.GestionBiblioteca.Entidades.Libro;
 import java.sql.Connection;
@@ -84,9 +85,8 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",libro.idcat";
-            sql = sql + ",libro.codcat";
-            sql = sql + ",libro.nomcat";
+            sql = sql + ",categoria_idcat";
+            sql = sql + ",autor_idautor";
             sql = sql + " from libro";
             sql = sql + " where";
             sql = sql + " nomlibro like '%" + nombre +"%'";
@@ -111,6 +111,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
                 
                 lista.add(obj);
             }
@@ -141,7 +142,8 @@ public class LibroAD extends EntidadAD{
             sql = sql + " or numpag = '" + libro.getNumpag() + "'";
             sql = sql + " or edicion = '" + libro.getEdicion() + "'";
             sql = sql + " or genero = '" + libro.getGenero() + "'";
-            sql = sql + " and idcat = '" + libro.getOcategoria().getIdcat() + "')";
+            sql = sql + " and idcat = '" + libro.getOcategoria().getIdcat() + "'";
+            sql = sql + " and idautor = '" + libro.getOautor().getIdautor() + "')";
             sql = sql + ";";
             
             Libro obj = null;
@@ -178,9 +180,10 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",libro.idcat";
-            sql = sql + ",libro.codcat";
-            sql = sql + ",libro.nomcat";
+            sql = sql + ",categoria_idcat";
+            sql = sql + ",autor_idautor";
+//            sql = sql + ",categoria.codcat";
+//            sql = sql + ",categoria.nomcat";
             sql = sql + " from libro";
             sql = sql + " where" ;
             sql = sql + " codlibro = '" + codigo + "'";
@@ -200,6 +203,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
             }
             return obj;
         } catch (Exception e) {
@@ -224,9 +228,10 @@ public class LibroAD extends EntidadAD{
             sql = sql + ",libro.numpag";
             sql = sql + ",libro.edicion";
             sql = sql + ",libro.genero";
-            sql = sql + ",libro.idcat";
-            sql = sql + ",libro.codcat";
-            sql = sql + ",libro.nomcat";
+            sql = sql + ",categoria_idcat";
+            sql = sql + ",autor_idautor";
+//            sql = sql + ",categoria.codcat";
+//            sql = sql + ",categoria.nomcat";
             sql = sql + " from libro";
             sql = sql + " where";
             sql = sql + " idlibro = "+ id.toString();
@@ -247,6 +252,7 @@ public class LibroAD extends EntidadAD{
                 obj.setEdicion(rs.getInt("edicion"));
                 obj.setGenero(rs.getString("genero"));
                 obj.setOcategoria(new Categoria(rs.getInt("idcat"),rs.getString("codcat"),rs.getString("nomcat")));
+                obj.setOautor(new Autor(rs.getInt("idautor"),rs.getString("codautor"),rs.getString("nomautor"),rs.getString("apepatautor"),rs.getString("apepatautor")));
             }
             return obj;
         } catch (Exception e) {
@@ -274,7 +280,8 @@ public class LibroAD extends EntidadAD{
             dml = dml + ",numpag";
             dml = dml + ",edicion";
             dml = dml + ",genero";
-            dml = dml + ",idcat";
+            dml = dml + ",categoria_idcat";
+            dml = dml + ",autor_idautor";
             dml = dml + ") values (";
             dml = dml + " '"+ obj.getIdlibro().toString() +"'";
             dml = dml + ",'" + obj.getCodlibro() + "'";
@@ -283,6 +290,7 @@ public class LibroAD extends EntidadAD{
             dml = dml + ",'" + obj.getEdicion() + "'";
             dml = dml + ",'" + obj.getGenero() + "'";
             dml = dml + ",'" + obj.getOcategoria().getIdcat() + "'";
+            dml = dml + ",'" + obj.getOautor().getIdautor() + "'";
             dml = dml + ");";
             
             EjecutarSentenciaDML(dml);
@@ -299,7 +307,8 @@ public class LibroAD extends EntidadAD{
             dml = dml + ",numpag = '" +obj.getNumpag() + "'";
             dml = dml + ",edicion = '" +obj.getEdicion() + "'";
             dml = dml + ",genero = '" +obj.getGenero() + "'";
-            dml = dml + ",idcat = '" +obj.getOcategoria().getIdcat() + "'";
+            dml = dml + ",categoria_idcat = '" +obj.getOcategoria().getIdcat() + "'";
+            dml = dml + ",autor_idautor = '" +obj.getOautor().getIdautor() + "'";
             dml = dml + " where";
             dml = dml + " idlibro = " + obj.getIdlibro().toString();
             dml = dml + ";";
